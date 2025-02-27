@@ -6,7 +6,7 @@ from .database import SessionLocal, engine
 from .image_processor import HighDimImageProcessor
 from .celery import process_image_async
 import os
-
+models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 # Dependency to get the database session
