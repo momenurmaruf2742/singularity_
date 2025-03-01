@@ -301,6 +301,4 @@ curl -X GET "http://127.0.0.1:8000/statistics?filename=sample_5184×3456.tiff" \
 ```
 License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Let me know if you need further assistance! 🚀
+This project is licensed under the `MIT` License. See the LICENSE file for details.
