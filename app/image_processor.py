@@ -7,6 +7,7 @@ class HighDimImageProcessor:
     def __init__(self, image_path):
         self.image = io.imread(image_path)
         self.dimensions = self.image.shape
+        print(f"Loaded image with dimensions: {self.dimensions}")  # Debug statement
 
     def get_slice(self, z=None, time=None, channel=None):
         """Extract a specific slice from the 5D image."""
@@ -28,12 +29,36 @@ class HighDimImageProcessor:
 
     def calculate_statistics(self):
         """Calculate image statistics (mean, std, min, max) for each band."""
-        stats = {
-            "mean": np.mean(self.image, axis=(0, 1, 2, 3)),
-            "std": np.std(self.image, axis=(0, 1, 2, 3)),
-            "min": np.min(self.image, axis=(0, 1, 2, 3)),
-            "max": np.max(self.image, axis=(0, 1, 2, 3)),
-        }
+        if len(self.dimensions) == 2:  # 2D image (X, Y)
+            stats = {
+                "mean": float(np.mean(self.image)),
+                "std": float(np.std(self.image)),
+                "min": float(np.min(self.image)),
+                "max": float(np.max(self.image)),
+            }
+        elif len(self.dimensions) == 3:  # 3D image (X, Y, Z or X, Y, Channel)
+            stats = {
+                "mean": np.mean(self.image, axis=(0, 1)).tolist(),
+                "std": np.std(self.image, axis=(0, 1)).tolist(),
+                "min": np.min(self.image, axis=(0, 1)).tolist(),
+                "max": np.max(self.image, axis=(0, 1)).tolist(),
+            }
+        elif len(self.dimensions) == 4:  # 4D image (X, Y, Z, Time or X, Y, Time, Channel)
+            stats = {
+                "mean": np.mean(self.image, axis=(0, 1, 2)).tolist(),
+                "std": np.std(self.image, axis=(0, 1, 2)).tolist(),
+                "min": np.min(self.image, axis=(0, 1, 2)).tolist(),
+                "max": np.max(self.image, axis=(0, 1, 2)).tolist(),
+            }
+        elif len(self.dimensions) == 5:  # 5D image (X, Y, Z, Time, Channel)
+            stats = {
+                "mean": np.mean(self.image, axis=(0, 1, 2, 3)).tolist(),
+                "std": np.std(self.image, axis=(0, 1, 2, 3)).tolist(),
+                "min": np.min(self.image, axis=(0, 1, 2, 3)).tolist(),
+                "max": np.max(self.image, axis=(0, 1, 2, 3)).tolist(),
+            }
+        else:
+            raise ValueError("Unsupported image dimensions.")
         return stats
 
     def segment_image(self, channel, method="kmeans"):
