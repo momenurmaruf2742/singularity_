@@ -50,6 +50,7 @@ def test_get_metadata():
     # Assert the filename matches the uploaded file
     assert response.json()["filename"] == "test.tiff"
 
+
 def test_get_slice():
     """Test the /slice endpoint."""
     # Upload a test image first
@@ -66,7 +67,9 @@ def test_get_slice():
     assert response.status_code == 200
 
     # Assert the response contains a valid slice
-    assert isinstance(response.json(), list)  # The slice should be a list of lists
+    response_data = response.json()
+    assert "slice" in response_data  # Check if the "slice" key exists
+    assert isinstance(response_data["slice"], list)  # The slice should be a list of lists
 
 
 def test_get_statistics():
