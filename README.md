@@ -52,10 +52,11 @@ Directory structure:
 ```
 ****Setup****
 
-**Clone the repository:**
+**Clone the repository:**</br>
+[https://github.com/momenurmaruf2742/singularity_.git](https://github.com/momenurmaruf2742/singularity_.git)
 
 ```
-git clone https://github.com/your-username/high-dim-image-processor.git
+https://github.com/momenurmaruf2742/singularity_.git
 
 cd high-dim-image-processor
 ```
